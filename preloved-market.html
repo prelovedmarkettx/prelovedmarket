@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Preloved Market — Books, Toys & More</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#fdf8f2;--warm:#e8d5b7;--brown:#6b4c2a;--dark:#2c1a0e;
+  --accent:#c0622a;--green:#4a7c59;--text:#3d2b1a;--muted:#8a7060;
+}
+body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+/* NAV */
+nav{background:var(--dark);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100}
+.logo{font-family:'Playfair Display',serif;color:#fff;font-size:1.4rem;font-weight:700;letter-spacing:1px}
+.logo span{color:var(--warm)}
+.logo small{font-size:0.65rem;color:rgba(255,255,255,0.45);display:block;letter-spacing:2px;text-transform:uppercase;font-family:'Lato',sans-serif;font-weight:300;margin-top:-2px}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.9rem;letter-spacing:0.5px;transition:color 0.2s}
+.nav-links a:hover{color:var(--warm)}
+.nav-btn{background:var(--accent);color:#fff;border:none;padding:8px 18px;border-radius:20px;font-family:'Lato',sans-serif;font-size:0.85rem;cursor:pointer;transition:opacity 0.2s}
+.nav-btn:hover{opacity:0.85}
+.cart-count{background:#fff;color:var(--accent);border-radius:50%;font-size:0.7rem;padding:2px 6px;margin-left:6px;font-weight:700}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--dark) 0%,#5c3a1e 50%,var(--brown) 100%);padding:5rem 2rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-tag{display:inline-block;background:rgba(255,255,255,0.15);color:var(--warm);font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:1.5rem;border:1px solid rgba(255,255,255,0.2)}
+.hero h1{font-family:'Playfair Display',serif;color:#fff;font-size:3.2rem;font-weight:700;line-height:1.2;margin-bottom:1rem}
+.hero h1 em{color:var(--warm);font-style:normal}
+.hero p{color:rgba(255,255,255,0.7);font-size:1.1rem;font-weight:300;max-width:560px;margin:0 auto 2.5rem;line-height:1.7}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:#fff;padding:14px 32px;border-radius:30px;border:none;font-family:'Lato',sans-serif;font-size:1rem;cursor:pointer;transition:transform 0.2s,opacity 0.2s;font-weight:700}
+.btn-primary:hover{opacity:0.9;transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:#fff;padding:14px 32px;border-radius:30px;border:2px solid rgba(255,255,255,0.4);font-family:'Lato',sans-serif;font-size:1rem;cursor:pointer;transition:background 0.2s}
+.btn-secondary:hover{background:rgba(255,255,255,0.1)}
+.hero-stats{display:flex;gap:3rem;justify-content:center;margin-top:3rem;padding-top:2.5rem;border-top:1px solid rgba(255,255,255,0.1)}
+.stat{text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--warm);font-weight:700}
+.stat-lbl{font-size:0.78rem;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+
+/* CATEGORY BANNER */
+.cat-banner{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:800px;margin:0 auto 2.5rem;padding:0 1rem}
+.cat-tile{border-radius:16px;padding:2rem 1rem;text-align:center;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;border:2px solid transparent}
+.cat-tile:hover,.cat-tile.active{transform:translateY(-4px);box-shadow:0 10px 30px rgba(107,76,42,0.2);border-color:var(--brown)}
+.cat-tile .tile-icon{font-size:2.5rem;margin-bottom:0.75rem}
+.cat-tile h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:4px}
+.cat-tile p{font-size:0.8rem;color:var(--muted)}
+.tile-books{background:#fde8d0}
+.tile-toys{background:#d0fde8}
+.tile-clothes{background:#d0e8fd}
+
+/* ITEMS SECTION */
+section{padding:4rem 2rem}
+.section-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;margin-bottom:0.5rem;text-align:center}
+.section-sub{color:var(--muted);text-align:center;font-size:0.95rem;margin-bottom:2rem}
+.filter-bar{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
+.filter-btn{padding:8px 20px;border-radius:20px;border:1.5px solid var(--warm);background:transparent;color:var(--brown);font-family:'Lato',sans-serif;font-size:0.88rem;cursor:pointer;transition:all 0.2s;font-weight:700}
+.filter-btn.active,.filter-btn:hover{background:var(--brown);color:#fff;border-color:var(--brown)}
+
+.items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1.5rem;max-width:960px;margin:0 auto}
+.item-card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(107,76,42,0.12);transition:transform 0.2s,box-shadow 0.2s;cursor:pointer}
+.item-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(107,76,42,0.15)}
+.item-cover{height:150px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;position:relative}
+.cond-badge{position:absolute;top:10px;right:10px;color:#fff;font-size:0.68rem;font-weight:700;padding:3px 10px;border-radius:10px;letter-spacing:0.5px}
+.cond-new{background:var(--green)}
+.cond-good{background:var(--accent)}
+.cond-fair{background:#a0896a}
+.size-badge{position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.45);color:#fff;font-size:0.68rem;font-weight:700;padding:3px 8px;border-radius:8px}
+.item-info{padding:1rem}
+.item-title{font-family:'Playfair Display',serif;font-size:0.98rem;font-weight:700;margin-bottom:2px;line-height:1.3}
+.item-sub{color:var(--muted);font-size:0.8rem;margin-bottom:0.75rem}
+.item-footer{display:flex;align-items:center;justify-content:space-between}
+.item-price{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--accent)}
+.add-btn{background:var(--brown);color:#fff;border:none;width:30px;height:30px;border-radius:50%;font-size:1.2rem;cursor:pointer;transition:background 0.2s;display:flex;align-items:center;justify-content:center;line-height:1}
+.add-btn:hover{background:var(--accent)}
+.order-btn{display:block;width:100%;margin-top:10px;padding:9px;background:var(--green);color:#fff;border:none;border-radius:8px;font-family:'Lato',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;transition:opacity 0.2s;text-align:center;text-decoration:none;letter-spacing:0.3px}
+.order-btn:hover{opacity:0.85}
+
+/* ORDER BANNER */
+.order-banner{background:linear-gradient(135deg,var(--green) 0%,#3a6b4a 100%);padding:3.5rem 2rem;text-align:center}
+.order-banner h2{font-family:'Playfair Display',serif;color:#fff;font-size:1.8rem;margin-bottom:0.5rem}
+.order-banner p{color:rgba(255,255,255,0.8);font-size:0.95rem;max-width:480px;margin:0 auto 1.5rem;line-height:1.6}
+.order-steps{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.order-step{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:12px;padding:1rem 1.25rem;text-align:center;min-width:140px}
+.order-step-num{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--warm);font-weight:700}
+.order-step-txt{font-size:0.8rem;color:rgba(255,255,255,0.8);margin-top:4px;line-height:1.4}
+.btn-order-big{display:inline-block;background:#fff;color:var(--green);padding:14px 36px;border-radius:30px;font-family:'Lato',sans-serif;font-size:1rem;font-weight:700;text-decoration:none;transition:transform 0.2s,opacity 0.2s;cursor:pointer;border:none}
+.btn-order-big:hover{transform:translateY(-2px);opacity:0.92}
+.order-note{font-size:0.78rem;color:rgba(255,255,255,0.55);margin-top:1rem}
+
+/* PAYMENT SECTION */
+.payment-section{background:#fff;border-top:1px solid rgba(107,76,42,0.1)}
+.payment-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;max-width:800px;margin:0 auto}
+.pay-card{border:1.5px solid var(--warm);border-radius:12px;padding:1.5rem;text-align:center}
+.pay-card h3{font-family:'Playfair Display',serif;font-size:1.05rem;margin:0.75rem 0 0.4rem;color:var(--brown)}
+.pay-card p{font-size:0.82rem;color:var(--muted);line-height:1.5}
+.pay-icon{font-size:2rem}
+.pay-tag{display:inline-block;margin-top:0.75rem;background:var(--cream);color:var(--brown);font-size:0.75rem;font-weight:700;padding:4px 12px;border-radius:10px;border:1px solid var(--warm)}
+
+/* WHY */
+.why{background:var(--dark);color:#fff}
+.why .section-title{color:#fff}
+.why .section-sub{color:rgba(255,255,255,0.5)}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;max-width:800px;margin:0 auto}
+.why-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:1.5rem;text-align:center}
+.why-icon{font-size:2rem;margin-bottom:1rem}
+.why-card h3{font-family:'Playfair Display',serif;font-size:1.05rem;margin-bottom:0.5rem;color:var(--warm)}
+.why-card p{font-size:0.85rem;color:rgba(255,255,255,0.55);line-height:1.6}
+
+/* CONTACT */
+.contact-wrap{max-width:520px;margin:0 auto;background:#fff;border-radius:16px;padding:2.5rem;border:1px solid rgba(107,76,42,0.12)}
+.contact-wrap label{display:block;font-size:0.82rem;font-weight:700;color:var(--brown);margin-bottom:6px;letter-spacing:0.5px;text-transform:uppercase}
+.contact-wrap input,.contact-wrap textarea,.contact-wrap select{width:100%;padding:12px 16px;border:1.5px solid var(--warm);border-radius:8px;font-family:'Lato',sans-serif;font-size:0.95rem;color:var(--text);background:var(--cream);margin-bottom:1.2rem;outline:none;transition:border-color 0.2s}
+.contact-wrap input:focus,.contact-wrap textarea:focus,.contact-wrap select:focus{border-color:var(--brown)}
+.contact-wrap textarea{height:100px;resize:none}
+.contact-wrap .btn-primary{width:100%;margin-top:0.5rem}
+
+footer{background:var(--dark);color:rgba(255,255,255,0.5);text-align:center;padding:2rem;font-size:0.85rem}
+footer strong{color:var(--warm);font-family:'Playfair Display',serif}
+
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--green);color:#fff;padding:12px 24px;border-radius:30px;font-size:0.9rem;font-weight:700;z-index:999;opacity:0;transform:translateY(20px);transition:all 0.3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:600px){
+  .hero h1{font-size:2.2rem}
+  .hero-stats{gap:1.5rem}
+  .cat-banner{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Preloved <span>Market</span><small>Books · Toys · Clothing</small></div>
+  <ul class="nav-links">
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#payment">Payment</a></li>
+    <li><a href="#order">Order</a></li>
+    <li><a href="#why">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+    🛒 Cart <span class="cart-count" id="cart-count">0</span>
+  </button>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">♻️ Books · Toys · Clothing — all preloved</div>
+  <h1>Give It Another <em>Life</em></h1>
+  <p>A warm little marketplace for preloved books, kids' toys, and clothing. Affordable, inspected, and ready for their next home.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Browse the Market</button>
+    <button class="btn-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Sell Your Items</button>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">300+</div><div class="stat-lbl">Items Listed</div></div>
+    <div class="stat"><div class="stat-num">$2</div><div class="stat-lbl">Starting Price</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">Categories</div></div>
+  </div>
+</div>
+
+<!-- SHOP -->
+<section id="shop" style="background:var(--cream)">
+  <div class="section-title">Browse the Market</div>
+  <div class="section-sub">Tap a category or filter to find what you need</div>
+
+  <div class="cat-banner">
+    <div class="cat-tile tile-books active" onclick="setCategory('books',this)">
+      <div class="tile-icon">📚</div>
+      <h3>Books</h3>
+      <p>Fiction, kids, self-help & more</p>
+    </div>
+    <div class="cat-tile tile-toys" onclick="setCategory('toys',this)">
+      <div class="tile-icon">🧸</div>
+      <h3>Toys</h3>
+      <p>Games, puzzles, action figures</p>
+    </div>
+    <div class="cat-tile tile-clothes" onclick="setCategory('clothes',this)">
+      <div class="tile-icon">👕</div>
+      <h3>Clothing</h3>
+      <p>Kids & adult preloved fashion</p>
+    </div>
+  </div>
+
+  <div class="filter-bar" id="filter-bar"></div>
+  <div class="items-grid" id="items-grid"></div>
+</section>
+
+<!-- PAYMENT -->
+<section id="payment" class="payment-section">
+  <div class="section-title">How to Pay</div>
+  <div class="section-sub">Choose whichever method works best for you</div>
+  <div class="payment-cards">
+    <div class="pay-card">
+      <div class="pay-icon">💳</div>
+      <h3>PayPal</h3>
+      <p>Safe online payment. Pay with card or your PayPal balance. Great for shipped orders.</p>
+      <div class="pay-tag">paypal.me/PrelovedMarket</div>
+    </div>
+    <div class="pay-card">
+      <div class="pay-icon">📱</div>
+      <h3>Venmo / Zelle</h3>
+      <p>Instant transfer, zero fees. Perfect for local pickups in Bryan, TX.</p>
+      <div class="pay-tag">@PrelovedMarket</div>
+    </div>
+    <div class="pay-card">
+      <div class="pay-icon">💵</div>
+      <h3>Cash on Pickup</h3>
+      <p>Prefer to pay in person? No problem — cash is always welcome at pickup.</p>
+      <div class="pay-tag">Local only</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="section-title">Why Preloved Market?</div>
+  <div class="section-sub">Good for your wallet, good for the planet</div>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-icon">💚</div><h3>Eco-Friendly</h3><p>Every item resold is one less thing in a landfill.</p></div>
+    <div class="why-card"><div class="why-icon">💰</div><h3>Affordable</h3><p>Items from just $2. Quality without the brand-new price tag.</p></div>
+    <div class="why-card"><div class="why-icon">🔍</div><h3>Inspected</h3><p>Everything is personally checked before listing.</p></div>
+    <div class="why-card"><div class="why-icon">🚀</div><h3>Fast & Local</h3><p>Local pickup in Bryan, TX or quick shipping available.</p></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--cream)">
+  <div class="section-title">Get in Touch</div>
+  <div class="section-sub">Want to buy, sell, or just say hello? Drop us a message.</div>
+  <div class="contact-wrap">
+    <label>Your Name</label>
+    <input type="text" placeholder="e.g. Sarah Johnson" />
+    <label>Email Address</label>
+    <input type="email" placeholder="you@email.com" />
+    <label>I want to...</label>
+    <select>
+      <option>Buy an item</option>
+      <option>Sell books</option>
+      <option>Sell toys</option>
+      <option>Sell clothing</option>
+      <option>Ask a question</option>
+    </select>
+    <label>Message</label>
+    <textarea placeholder="Tell us what you're looking for, or what you'd like to sell..."></textarea>
+    <button class="btn-primary" onclick="sendMsg()">Send Message ✉️</button>
+  </div>
+</section>
+
+<!-- ORDER BANNER -->
+<section class="order-banner" id="order">
+  <h2>Ready to Order? It's Simple. 📋</h2>
+  <p>Click any "Order this item" button, fill in a quick Google Form, and your order lands straight in our spreadsheet. We'll contact you within 24 hours.</p>
+  <div class="order-steps">
+    <div class="order-step"><div class="order-step-num">1</div><div class="order-step-txt">Click "Order this item" on any listing</div></div>
+    <div class="order-step"><div class="order-step-num">2</div><div class="order-step-txt">Fill in your name, contact & payment choice</div></div>
+    <div class="order-step"><div class="order-step-num">3</div><div class="order-step-txt">We get notified & reply within 24 hours</div></div>
+    <div class="order-step"><div class="order-step-num">4</div><div class="order-step-txt">Pick up locally or arrange shipping</div></div>
+  </div>
+  <a class="btn-order-big" href="YOUR_GOOGLE_FORM_LINK" target="_blank">📋 Open Order Form</a>
+  <div class="order-note">Your details go directly into our secure Google Sheets — no account needed</div>
+</section>
+
+<footer>
+  <strong>Preloved Market</strong> — Books · Toys · Clothing<br>
+  <span style="margin-top:8px;display:block">Bryan, TX · Made with ♥ · © 2026</span>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────
+const data = {
+  books: {
+    filters: ['All','Fiction','Non-Fiction','Kids','Self-Help'],
+    items: [
+      {emoji:'📚',bg:'#fde8d0',title:'The Alchemist',sub:'Paulo Coelho · Fiction',price:4,cond:'Good',tag:'Fiction'},
+      {emoji:'🔬',bg:'#d0e8fd',title:'A Brief History of Time',sub:'Stephen Hawking · Non-Fiction',price:5,cond:'Like New',tag:'Non-Fiction'},
+      {emoji:'🧸',bg:'#d0fde8',title:"Charlotte's Web",sub:"E.B. White · Kids",price:3,cond:'Good',tag:'Kids'},
+      {emoji:'💡',bg:'#fdfdd0',title:'Atomic Habits',sub:'James Clear · Self-Help',price:7,cond:'Like New',tag:'Self-Help'},
+      {emoji:'🏔',bg:'#e8d0fd',title:'Into the Wild',sub:'Jon Krakauer · Non-Fiction',price:5,cond:'Good',tag:'Non-Fiction'},
+      {emoji:'🌊',bg:'#d0f0fd',title:'The Old Man & the Sea',sub:'Hemingway · Fiction',price:4,cond:'Fair',tag:'Fiction'},
+      {emoji:'🌟',bg:'#fde8f0',title:'The 7 Habits',sub:'Stephen Covey · Self-Help',price:6,cond:'Like New',tag:'Self-Help'},
+      {emoji:'🦁',bg:'#f0fde8',title:'The Lion, the Witch…',sub:'C.S. Lewis · Kids',price:4,cond:'Good',tag:'Kids'},
+    ]
+  },
+  toys: {
+    filters: ['All','0-3 yrs','4-8 yrs','9-12 yrs','Board Games'],
+    items: [
+      {emoji:'🧩',bg:'#fde8d0',title:'Wooden Puzzle Set',sub:'Age 2+ · 12 pieces',price:5,cond:'Like New',tag:'0-3 yrs'},
+      {emoji:'🚂',bg:'#d0fde8',title:'Train Track Set',sub:'Age 3+ · Complete set',price:8,cond:'Good',tag:'0-3 yrs'},
+      {emoji:'🦸',bg:'#d0e8fd',title:'Action Figure Pack',sub:'Age 5+ · 6 figures',price:6,cond:'Good',tag:'4-8 yrs'},
+      {emoji:'🎨',bg:'#fdfdd0',title:'Art & Craft Kit',sub:'Age 6+ · Lightly used',price:4,cond:'Good',tag:'4-8 yrs'},
+      {emoji:'🎲',bg:'#e8d0fd',title:'Monopoly Classic',sub:'All pieces present',price:7,cond:'Like New',tag:'Board Games'},
+      {emoji:'🔭',bg:'#d0f0fd',title:'Junior Telescope',sub:'Age 8+ · With manual',price:10,cond:'Good',tag:'9-12 yrs'},
+      {emoji:'🃏',bg:'#fde8f0',title:'Uno Card Game',sub:'Complete deck',price:3,cond:'Good',tag:'Board Games'},
+      {emoji:'🤖',bg:'#f0fde8',title:'Remote Control Car',sub:'Age 6+ · Batteries needed',price:9,cond:'Fair',tag:'4-8 yrs'},
+    ]
+  },
+  clothes: {
+    filters: ['All','Baby','2-5 yrs','6-12 yrs','Adult'],
+    items: [
+      {emoji:'👶',bg:'#fde8d0',title:'Baby Onesie Bundle',sub:'3-6 months · 5 pieces',price:6,cond:'Like New',size:'3-6M',tag:'Baby'},
+      {emoji:'🧥',bg:'#d0fde8',title:'Kids Winter Jacket',sub:'Age 3 · Blue',price:8,cond:'Good',size:'3Y',tag:'2-5 yrs'},
+      {emoji:'👗',bg:'#d0e8fd',title:'Floral Summer Dress',sub:'Age 5 · Pink',price:5,cond:'Like New',size:'5Y',tag:'2-5 yrs'},
+      {emoji:'👟',bg:'#fdfdd0',title:'Kids Sneakers',sub:'Size 2 · Hardly worn',price:7,cond:'Good',size:'Sz 2',tag:'6-12 yrs'},
+      {emoji:'🧢',bg:'#e8d0fd',title:'Baseball Cap',sub:'Kids one-size',price:2,cond:'Good',size:'OS',tag:'6-12 yrs'},
+      {emoji:'👕',bg:'#d0f0fd',title:"Women's Blouse",sub:'Size M · White',price:5,cond:'Like New',size:'M',tag:'Adult'},
+      {emoji:'👖',bg:'#fde8f0',title:"Men's Jeans",sub:'32x30 · Dark wash',price:9,cond:'Good',size:'32x30',tag:'Adult'},
+      {emoji:'🧣',bg:'#f0fde8',title:'Knit Scarf & Gloves',sub:'Adult set · Grey',price:4,cond:'Like New',size:'OS',tag:'Adult'},
+    ]
+  }
+};
+
+// ── STATE ──────────────────────────────────────────────
+let currentCat = 'books';
+let currentFilter = 'All';
+let cart = 0;
+
+// ── RENDER ─────────────────────────────────────────────
+function setCategory(cat, el) {
+  currentCat = cat;
+  currentFilter = 'All';
+  document.querySelectorAll('.cat-tile').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderFilters();
+  renderItems();
+}
+
+function renderFilters() {
+  const filters = data[currentCat].filters;
+  document.getElementById('filter-bar').innerHTML = filters.map(f =>
+    `<button class="filter-btn ${f===currentFilter?'active':''}" onclick="setFilter('${f}',this)">${f}</button>`
+  ).join('');
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderItems();
+}
+
+function renderItems() {
+  const all = data[currentCat].items;
+  const filtered = currentFilter === 'All' ? all : all.filter(i => i.tag === currentFilter);
+  const condClass = {
+    'Like New': 'cond-new',
+    'Good': 'cond-good',
+    'Fair': 'cond-fair'
+  };
+  document.getElementById('items-grid').innerHTML = filtered.map((item, idx) => `
+    <div class="item-card">
+      <div class="item-cover" style="background:${item.bg}">
+        ${item.emoji}
+        ${item.size ? `<div class="size-badge">${item.size}</div>` : ''}
+        <div class="cond-badge ${condClass[item.cond]||'cond-good'}">${item.cond}</div>
+      </div>
+      <div class="item-info">
+        <div class="item-title">${item.title}</div>
+        <div class="item-sub">${item.sub}</div>
+        <div class="item-footer">
+          <div class="item-price">$${item.price}</div>
+          <button class="add-btn" onclick="addToCart('${item.title.replace(/'/g,"\\'")}')">+</button>
+        </div>
+        <a class="order-btn" href="YOUR_GOOGLE_FORM_LINK" target="_blank" onclick="trackOrder('${item.title.replace(/'/g,"\\'")}')">📋 Order this item</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addToCart(title) {
+  cart++;
+  document.getElementById('cart-count').textContent = cart;
+  showToast(`"${title}" added to cart 🎉`);
+}
+
+function trackOrder(title) {
+  showToast(`Opening order form for "${title}" 📋`);
+}
+
+function sendMsg() {
+  showToast("Message sent! We'll reply within 24 hours 📬");
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── INIT ───────────────────────────────────────────────
+renderFilters();
+renderItems();
+</script>
+</body>
+</html>
